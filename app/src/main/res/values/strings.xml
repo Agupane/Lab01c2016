@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Lab01c2016</string>
+    <string name="email">algo</string>
+    <string name="cuit">soyuncuit</string>
+    <string name="monto_a_invertir">soyunmonto</string>
+    <string name="dias_seleccionados">diasSelec</string>
+    <string name="dias_inversion">diasInver</string>
+    <string name="rendimiento">rendimiento</string>
+    <string name="botonText">textoBoton</string>
+    <string name="checkboxText">textoCheckbox</string>
+    <string name="title_activity_actividad">Actividad</string>
+    <string name="msgExitoPlazoFijo1">Plazo fijo realizado. Recibira </string>
+    <string name="msgExitoPlazoFijo2"> al vencimiento!</string>
+    <string name="msgErrorPlazoFijo">Se produjo un error en la operacion de plazo fijo.</string>
 </resources>
