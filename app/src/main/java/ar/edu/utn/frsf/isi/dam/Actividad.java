@@ -3,6 +3,9 @@ package ar.edu.utn.frsf.isi.dam;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,12 +15,13 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class Actividad extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
-    private float montoRecibido,montoDepositado;
-    private int cantDias, colorMsg;
+    private float montoRecibido,montoDepositado,cantDias;
+    private int  colorMsg;
     private String stringMontoDepositado;
-    private EditText editTextMontoDepositado;
+    private EditText editTextMontoDepositado,editTextMail;
     private TextView textViewMontoRecibido,textViewCantDias;
     private Toolbar toolbar;
     private Button botonPlazoFijo;
@@ -31,6 +35,7 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         setSupportActionBar(toolbar);
         botonPlazoFijo.setOnClickListener(this);
         barraPlazoFijo.setOnSeekBarChangeListener(this);
+
     }
     @Override
     public void onClick(View view)
@@ -54,14 +59,14 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
     }
     private boolean validarDatos()
     {
-        return false;
+        return ValidatorGeneric.getInstance().validarMail(editTextMail);
     }
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser)
     {
         cantDias=progress;
         textViewCantDias = (TextView) findViewById(R.id.textViewCantDias);
-        textViewCantDias.setText(Integer.toString(cantDias));
+        textViewCantDias.setText(Float.toString(cantDias));
     }
 
     @Override
@@ -73,10 +78,10 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onStopTrackingTouch(SeekBar seekBar)
     {
+        cantDias=seekBar.getProgress();
         stringMontoDepositado = ((TextView) findViewById(R.id.editTextMontoDepositado)).getText().toString();
         montoRecibido = calcularMontoPlazoFijo();
-        textViewMontoRecibido.setText(Float.toString(montoRecibido));
-
+        textViewMontoRecibido.setText("Monto a recibir: $"+Float.toString(montoRecibido));
     }
 
     /**
@@ -85,17 +90,20 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
      */
     private float calcularMontoPlazoFijo()
     {
-        float monto,taza;
+        float taza,base,exponente,potencia;
+        double interes,montoRecibido;
         montoDepositado = obtenerMontoDepositado();
         taza = calcularTazaInteres();
-        System.out.println(Float.toString(taza));
-        System.out.println(Float.toString(montoDepositado));
-        monto = (float) (montoDepositado * ( Math.pow((1+(taza/100)),(cantDias/360)) - 1 ));
-        return monto;
+        base = (1f+taza);
+        exponente = cantDias/360f;
+        potencia = (float) Math.pow(base, exponente);
+        interes = ( montoDepositado * (potencia-1f) );
+        montoRecibido = montoDepositado+interes;
+        return (float) montoRecibido;
     }
 
     /**
-     * Devuelve la taza de interes dependiendo del monto y la cantidad de dias
+     * Devuelve la taza de interes dependiendo del monto depositado y la cantidad de dias
      * @return
      */
     private float calcularTazaInteres()
@@ -105,17 +113,17 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         {
             if(montoDepositado <= 5000)
             {
-                taza=0.25f;
+                taza=(float) R.dimen.minMontoMinDias;
             }
             else
             {
                 if(montoDepositado <= 99999)
                 {
-                    taza=0.3f;
+                    taza=(float) R.dimen.medMontoMinDias;
                 }
                 else
                 {
-                    taza=0.35f;
+                    taza=(float) R.dimen.maxMontoMinDias;
                 }
             }
         }
@@ -123,17 +131,17 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         {
             if(montoDepositado <= 5000)
             {
-                taza=0.275f;
+                taza=(float) R.dimen.minMontoMaxDias;
             }
             else
             {
                 if(montoDepositado <= 99999)
                 {
-                    taza=0.323f;
+                    taza=(float) R.dimen.medMontoMaxDias;
                 }
                 else
                 {
-                    taza=0.385f;
+                    taza=(float) R.dimen.maxMontoMaxDias;
                 }
             }
         }
@@ -150,20 +158,35 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         barraPlazoFijo = (SeekBar) findViewById(R.id.seekBarPlazoFijo);
         textViewCantDias = (TextView) findViewById(R.id.textViewCantDeDias);
         textViewMontoRecibido = (TextView) findViewById(R.id.textViewMontoRecibido);
+        editTextMontoDepositado = (EditText) findViewById(R.id.editTextMontoDepositado);
+        editTextMail = (EditText) findViewById(R.id.editTextMail);
     }
 
     /**
      * Transforma el string del monto depositado con el simbolo $ a valor flotante
      * @return
      */
-    private float obtenerMontoDepositado()
+    @Deprecated
+    private float obtenerMontoDepositado2()
     {
         float monto;
         NumberFormat nf = NumberFormat.getInstance(Locale.getDefault());
         ParsePosition ps = new ParsePosition(1);
-        System.out.println(stringMontoDepositado);
         long numero =(long) nf.parseObject(stringMontoDepositado,ps);
         monto = new Float(numero);
         return monto;
     }
+
+    /**
+     * Dado el valor del monto depositado en string, devuelve el valor flotante
+     * @return
+     */
+    private float obtenerMontoDepositado()
+    {
+        String stringMontoDepositado;
+        stringMontoDepositado = ( editTextMontoDepositado ).getText().toString();
+        return Float.parseFloat(stringMontoDepositado);
+    }
+
+
 }

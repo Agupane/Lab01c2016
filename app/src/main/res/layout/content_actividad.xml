@@ -16,8 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editTextCuit"
-        android:text="209998887771"
+        android:text="@string/cuit_default"
         android:layout_below="@+id/textViewCUIT"
+        android:inputType="number"
         android:layout_alignParentStart="true" />
 
     <TextView
@@ -56,8 +57,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editTextMontoDepositado"
-        android:text="$5001"
+        android:text="@string/monto_a_invertir_default"
         android:layout_below="@+id/textViewImporte"
+        android:inputType="numberDecimal"
+        android:digits="0123456789"
         android:layout_alignParentStart="true" />
 
     <EditText
@@ -68,7 +71,7 @@
         android:id="@+id/editTextMail"
         android:layout_below="@+id/textViewEmail"
         android:layout_alignParentStart="true"
-        android:text="mdomingu@gmail.com" />
+        android:text="@string/email_default" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="$5000.0"
+        android:text="@string/rendimiento_default"
         android:id="@+id/textViewMontoRecibido"
         android:layout_gravity="bottom"
         android:layout_below="@+id/textViewCantDias"
@@ -100,7 +103,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Renovar Automaticamente al vencimiento"
+        android:text="@string/checkboxPlazoFijoText"
         android:id="@+id/checkBoxRenovar"
         android:checked="true"
         android:layout_gravity="center|top"
@@ -110,7 +113,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hacer Plazo Fijo"
+        android:text="@string/botonPlazoFijoText"
         android:id="@+id/botonPlazoFijo"
         android:layout_gravity="top"
         android:layout_below="@+id/checkBoxRenovar"
@@ -128,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="..26"
+        android:text="@string/dias_seleccionados_default"
         android:id="@+id/textViewCantDias"
         android:layout_gravity="top"
         android:layout_below="@+id/seekBarPlazoFijo"

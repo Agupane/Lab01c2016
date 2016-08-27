@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <item name="minMontoMinDias" type="dimen" format="float">0.25</item>
+    <item name="minMontoMaxDias" type="dimen" format="float">0.275</item>
+    <item name="medMontoMinDias" type="dimen" format="float">0.3</item>
+    <item name="medMontoMaxDias" type="dimen" format="float">0.323</item>
+    <item name="maxMontoMinDias" type="dimen" format="float">0.35</item>
+    <item name="maxMontoMaxDias" type="dimen" format="float">0.385</item>
+</resources>
