@@ -24,7 +24,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calculadora Plazo Fijo"
+        android:text="@string/tituloCalculadora"
         android:id="@+id/textViewCalculadora"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -32,7 +32,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Correo electronico"
+        android:text="@string/mail"
         android:id="@+id/textViewEmail"
         android:layout_below="@+id/textViewCalculadora"
         android:layout_alignParentStart="true" />
@@ -40,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CUIT"
+        android:text="@string/cuit"
         android:id="@+id/textViewCUIT"
         android:layout_below="@+id/editTextMail"
         android:layout_alignStart="@+id/textViewImporte" />
@@ -48,7 +48,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Importe"
+        android:text="@string/importe"
         android:id="@+id/textViewImporte"
         android:layout_below="@+id/editTextCuit"
         android:layout_alignParentStart="true" />
@@ -76,7 +76,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cantidad de dias"
+        android:text="@string/cantDias"
         android:id="@+id/textViewCantDeDias"
         android:layout_below="@+id/editTextMontoDepositado"
         android:layout_alignParentStart="true" />
@@ -87,8 +87,10 @@
         android:id="@+id/seekBarPlazoFijo"
         android:layout_below="@+id/textViewCantDeDias"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/textViewError"
-        android:indeterminate="false" />
+        android:max="365"
+        android:progress="@string/dias_seleccionados_default"
+        android:indeterminate="false"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,7 +124,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Plazo fijo realizado. Recibira 5000.0 al vencimiento!"
+        android:visibility="invisible"
         android:id="@+id/textViewError"
         android:layout_below="@+id/botonPlazoFijo"
         android:layout_alignParentStart="true" />

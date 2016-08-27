@@ -15,14 +15,13 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
-public class Actividad extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class Actividad extends AppCompatActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnFocusChangeListener{
     private float montoRecibido,montoDepositado,cantDias;
     private int  colorMsg;
     private String stringMontoDepositado;
     private EditText editTextMontoDepositado,editTextMail;
-    private TextView textViewMontoRecibido,textViewCantDias;
+    private TextView textViewMontoRecibido,textViewCantDias,textViewMsgError;
     private Toolbar toolbar;
     private Button botonPlazoFijo;
     private SeekBar barraPlazoFijo;
@@ -35,27 +34,28 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         setSupportActionBar(toolbar);
         botonPlazoFijo.setOnClickListener(this);
         barraPlazoFijo.setOnSeekBarChangeListener(this);
-
+        editTextMontoDepositado.setOnFocusChangeListener(this);
     }
     @Override
     public void onClick(View view)
     {
-        EditText mail = (EditText) findViewById(R.id.editTextMail);
-        TextView msgError = (TextView) findViewById(R.id.textViewError);
+
         if(validarDatos() == false)
         {
             colorMsg = getResources().getColor(R.color.ROJO);
-            msgError.setTextColor(colorMsg);
-            msgError.setText(R.string.msgErrorPlazoFijo);
+            textViewMsgError.setTextColor(colorMsg);
+            textViewMsgError.setText(R.string.msgErrorPlazoFijo);
         }
         else
         {
-
             colorMsg = getResources().getColor(R.color.VERDE);
-            msgError.setTextColor(colorMsg);
-//            msgError.setText(R.string.msgExitoPlazoFijo1+R.string.msgExitoPlazoFijo2);
-           // msgError.setText(R.string.msgExitoPlazoFijo1+montoPlazoFijo+R.string.msgExitoPlazoFijo2);
+            String msgExito1,msgExito2;
+            msgExito1 = getResources().getString(R.string.msgExitoPlazoFijo1);
+            msgExito2 = getResources().getString(R.string.msgExitoPlazoFijo2);
+            textViewMsgError.setTextColor(colorMsg);
+            textViewMsgError.setText(msgExito1+Float.toString(montoRecibido)+msgExito2);
         }
+        textViewMsgError.setVisibility(View.VISIBLE);
     }
     private boolean validarDatos()
     {
@@ -72,18 +72,27 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onStartTrackingTouch(SeekBar seekBar)
     {
-
+        textViewMsgError.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar)
     {
         cantDias=seekBar.getProgress();
-        stringMontoDepositado = ((TextView) findViewById(R.id.editTextMontoDepositado)).getText().toString();
-        montoRecibido = calcularMontoPlazoFijo();
-        textViewMontoRecibido.setText("Monto a recibir: $"+Float.toString(montoRecibido));
+        actualizarMontoRecibido();
+
     }
 
+    /**
+     * Actualiza la seccion del monto a recibir en la interfaz
+     */
+    private void actualizarMontoRecibido()
+    {
+        stringMontoDepositado = ((TextView) findViewById(R.id.editTextMontoDepositado)).getText().toString();
+        montoRecibido = calcularMontoPlazoFijo();
+        String msgMonto = getResources().getString(R.string.montoARecibir);
+        textViewMontoRecibido.setText(msgMonto+Float.toString(montoRecibido));
+    }
     /**
      * Devuelve el monto del plazo fijo incluyendo los intereses
      * @return
@@ -113,17 +122,17 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         {
             if(montoDepositado <= 5000)
             {
-                taza=(float) R.dimen.minMontoMinDias;
+                taza=Float.parseFloat(getApplicationContext().getString(R.string.minMontoMinDias));
             }
             else
             {
                 if(montoDepositado <= 99999)
                 {
-                    taza=(float) R.dimen.medMontoMinDias;
+                    taza=Float.parseFloat(getApplicationContext().getString(R.string.medMontoMinDias));
                 }
                 else
                 {
-                    taza=(float) R.dimen.maxMontoMinDias;
+                    taza=Float.parseFloat(getApplicationContext().getString(R.string.maxMontoMinDias));
                 }
             }
         }
@@ -131,17 +140,17 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         {
             if(montoDepositado <= 5000)
             {
-                taza=(float) R.dimen.minMontoMaxDias;
+                taza=Float.parseFloat(getApplicationContext().getString(R.string.minMontoMaxDias));
             }
             else
             {
                 if(montoDepositado <= 99999)
                 {
-                    taza=(float) R.dimen.medMontoMaxDias;
+                    taza=Float.parseFloat(getApplicationContext().getString(R.string.medMontoMaxDias));
                 }
                 else
                 {
-                    taza=(float) R.dimen.maxMontoMaxDias;
+                    taza=Float.parseFloat(getApplicationContext().getString(R.string.maxMontoMaxDias));
                 }
             }
         }
@@ -158,6 +167,7 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         barraPlazoFijo = (SeekBar) findViewById(R.id.seekBarPlazoFijo);
         textViewCantDias = (TextView) findViewById(R.id.textViewCantDeDias);
         textViewMontoRecibido = (TextView) findViewById(R.id.textViewMontoRecibido);
+        textViewMsgError = (TextView) findViewById(R.id.textViewError);
         editTextMontoDepositado = (EditText) findViewById(R.id.editTextMontoDepositado);
         editTextMail = (EditText) findViewById(R.id.editTextMail);
     }
@@ -188,5 +198,8 @@ public class Actividad extends AppCompatActivity implements View.OnClickListener
         return Float.parseFloat(stringMontoDepositado);
     }
 
-
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        actualizarMontoRecibido();
+    }
 }

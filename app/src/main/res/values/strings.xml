@@ -1,16 +1,31 @@
 <resources>
+    <!-- Titulos -->
     <string name="app_name">Lab01c2016</string>
     <string name="title_activity_actividad">Actividad</string>
+    <string name="tituloCalculadora">Calculadora plazo fijo</string>
+    <!-- Fin titulos -->
 
-    <string name="email_default">mdomingu@gmail.com</string>
-    <string name="cuit_default">209998887771</string>
-    <string name="monto_a_invertir_default">5000</string>
-    <string name="dias_seleccionados_default">36</string>
-    <string name="rendimiento_default">rendimiento</string>
+    <!-- Textos -->
     <string name="botonPlazoFijoText">Hacer plazo fijo</string>
     <string name="checkboxPlazoFijoText">Renovar automaticamente al vencimiento</string>
+    <string name="cantDias">Cantidad de dias</string>
+    <string name="importe">Importe</string>
+    <string name="cuit">CUIT</string>
+    <string name="mail">Correo electronico</string>
+    <string name="montoARecibir">Monto a recibir: $ </string>
+    <string name="rendimiento_default">Monto a recibir: $5003.1</string>
+        <!-- Msgs de error y exito -->
+         <string name="msgExitoPlazoFijo1">Plazo fijo realizado. Recibira $</string>
+        <string name="msgExitoPlazoFijo2"> al vencimiento!</string>
+        <string name="msgErrorPlazoFijo">Se produjo un error en la operacion de plazo fijo.</string>
+        <!-- Fin msgs de error y exito -->
+    <!-- Fin textos -->
 
-    <string name="msgExitoPlazoFijo1">Plazo fijo realizado. Recibira </string>
-    <string name="msgExitoPlazoFijo2"> al vencimiento!</string>
-    <string name="msgErrorPlazoFijo">Se produjo un error en la operacion de plazo fijo.</string>
+    <!-- Numeros -->
+    <string name="email_default">mdomingu@gmail.com</string>
+    <string name="cuit_default">209998887771</string>
+    <string name="dias_seleccionados_default">36</string>
+    <string name="dias_inversion_default">36</string>
+    <string name="monto_a_invertir_default">5000</string>
+    <!-- Fin numeros -->
 </resources>

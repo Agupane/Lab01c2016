@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="minMontoMinDias" type="dimen" format="float">0.25</item>
-    <item name="minMontoMaxDias" type="dimen" format="float">0.275</item>
-    <item name="medMontoMinDias" type="dimen" format="float">0.3</item>
-    <item name="medMontoMaxDias" type="dimen" format="float">0.323</item>
-    <item name="maxMontoMinDias" type="dimen" format="float">0.35</item>
-    <item name="maxMontoMaxDias" type="dimen" format="float">0.385</item>
+    <string name ="minMontoMinDias">0.25</string>
+    <string name="minMontoMaxDias">0.275</string>
+    <string name="medMontoMinDias">0.3</string>
+    <string name="medMontoMaxDias">0.323</string>
+    <string name="maxMontoMinDias">0.35</string>
+    <string name="maxMontoMaxDias">0.385</string>
 </resources>
